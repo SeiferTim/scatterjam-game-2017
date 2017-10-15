@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="sprites.png">
+	<!--
+	Created with ShoeBox
+	http://renderhjs.net/shoebox/
+	-->
+	<SubTexture name="punch00.png"	x="201"	y="0"	width="200"	height="156" frameX="-0" frameY="-0" frameWidth="200" frameHeight="156"/>
+	<SubTexture name="punch01.png"	x="201"	y="314"	width="200"	height="156" frameX="-0" frameY="-0" frameWidth="200" frameHeight="156"/>
+	<SubTexture name="punch02.png"	x="201"	y="157"	width="200"	height="156" frameX="-0" frameY="-0" frameWidth="200" frameHeight="156"/>
+	<SubTexture name="punch03.png"	x="402"	y="0"	width="200"	height="156" frameX="-0" frameY="-0" frameWidth="200" frameHeight="156"/>
+	<SubTexture name="punch04.png"	x="0"	y="314"	width="200"	height="156" frameX="-0" frameY="-0" frameWidth="200" frameHeight="156"/>
+	<SubTexture name="punch05.png"	x="0"	y="157"	width="200"	height="156" frameX="-0" frameY="-0" frameWidth="200" frameHeight="156"/>
+	<SubTexture name="punch06.png"	x="0"	y="0"	width="200"	height="156" frameX="-0" frameY="-0" frameWidth="200" frameHeight="156"/>
+</TextureAtlas>

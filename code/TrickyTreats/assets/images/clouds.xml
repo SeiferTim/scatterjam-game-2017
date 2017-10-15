@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="sprites.png">
+	<!--
+	Created with ShoeBox
+	http://renderhjs.net/shoebox/
+	-->
+	<SubTexture name="cloud-1.png"	x="0"	y="157"	width="397"	height="139" frameX="-0" frameY="-0" frameWidth="397" frameHeight="139"/>
+	<SubTexture name="cloud-2.png"	x="0"	y="0"	width="438"	height="156" frameX="-0" frameY="-0" frameWidth="438" frameHeight="156"/>
+	<SubTexture name="cloud-3.png"	x="0"	y="297"	width="278"	height="82" frameX="-0" frameY="-0" frameWidth="278" frameHeight="82"/>
+</TextureAtlas>

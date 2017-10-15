@@ -2,6 +2,7 @@ package;
 
 import flash.geom.Rectangle;
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.addons.display.FlxSliceSprite;
 import flixel.graphics.frames.FlxBitmapFont;
 import flixel.math.FlxRect;
@@ -26,7 +27,7 @@ class Dialog extends FlxGroup
 	public var gave:Bool = false;
 	private var newText:String;
 	public var thought:FlxSliceSprite;
-	//public var candyCount:FlxBitmapText;
+	public var candy:FlxSprite;
 	
 	public var alpha(default, set):Float = 0;
 	
@@ -63,10 +64,9 @@ class Dialog extends FlxGroup
 		
 		add(hint);
 		
-		/*candyCount = new FlxBitmapText(font_light);
-		candyCount.text = Std.string(parent.playerCandy);
-		candyCount.color = FlxColor.PURPLE;
-		add(candyCount);*/
+		candy = new FlxSprite(0, 0, AssetPaths.candybar_small__png);
+		
+		add(candy);
 		
 		
 		alpha = 0.01;
@@ -100,6 +100,11 @@ class Dialog extends FlxGroup
 		thought.y = hint.y -12;
 		thought.width = hint.width + 24;
 		thought.height = hint.height + 24;
+		
+		candy.x = hint.x + 73;
+		candy.y = hint.y + 24;
+		candy.visible = true;
+		candy.alpha = alpha;
 		
 		//candyCount.x = FlxG.camera.totalScaleX;
 		//candyCount.y = FlxG.camera.totalScaleY;
@@ -142,6 +147,8 @@ class Dialog extends FlxGroup
 		thought.width = hint.width + 24;
 		thought.height = hint.height + 24;
 		
+		candy.visible = false;
+		
 		//candyCount.text = Std.string(parent.playerCandy);
 		
 		//candyCount.x = FlxG.camera.scroll.x * 4;
@@ -158,7 +165,7 @@ class Dialog extends FlxGroup
 		else if (Value <= 0)
 			Value = 0.01;
 		alpha = Value;
-		thought.alpha = hint.alpha = text.alpha = box.alpha = Value; //candyCount.alpha = 
+		candy.alpha = thought.alpha = hint.alpha = text.alpha = box.alpha = Value; //candyCount.alpha = 
 		return Value;
 	}
 	

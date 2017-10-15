@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="sprites.png">
+	<!--
+	Created with ShoeBox
+	http://renderhjs.net/shoebox/
+	-->
+	<SubTexture name="explosion0000.png"	x="608"	y="413"	width="303"	height="412" frameX="-0" frameY="-0" frameWidth="303" frameHeight="412"/>
+	<SubTexture name="explosion0001.png"	x="1216"	y="0"	width="303"	height="412" frameX="-0" frameY="-0" frameWidth="303" frameHeight="412"/>
+	<SubTexture name="explosion0002.png"	x="304"	y="826"	width="303"	height="412" frameX="-0" frameY="-0" frameWidth="303" frameHeight="412"/>
+	<SubTexture name="explosion0003.png"	x="304"	y="413"	width="303"	height="412" frameX="-0" frameY="-0" frameWidth="303" frameHeight="412"/>
+	<SubTexture name="explosion0004.png"	x="304"	y="0"	width="303"	height="412" frameX="-0" frameY="-0" frameWidth="303" frameHeight="412"/>
+	<SubTexture name="explosion0005.png"	x="0"	y="826"	width="303"	height="412" frameX="-0" frameY="-0" frameWidth="303" frameHeight="412"/>
+	<SubTexture name="explosion0006.png"	x="0"	y="413"	width="303"	height="412" frameX="-0" frameY="-0" frameWidth="303" frameHeight="412"/>
+	<SubTexture name="explosion0007.png"	x="0"	y="0"	width="303"	height="412" frameX="-0" frameY="-0" frameWidth="303" frameHeight="412"/>
+	<SubTexture name="explosion0008.png"	x="608"	y="0"	width="303"	height="412" frameX="-0" frameY="-0" frameWidth="303" frameHeight="412"/>
+	<SubTexture name="explosion0009.png"	x="912"	y="826"	width="303"	height="412" frameX="-0" frameY="-0" frameWidth="303" frameHeight="412"/>
+	<SubTexture name="explosion0010.png"	x="912"	y="413"	width="303"	height="412" frameX="-0" frameY="-0" frameWidth="303" frameHeight="412"/>
+	<SubTexture name="explosion0011.png"	x="912"	y="0"	width="303"	height="412" frameX="-0" frameY="-0" frameWidth="303" frameHeight="412"/>
+	<SubTexture name="explosion0012.png"	x="608"	y="826"	width="303"	height="412" frameX="-0" frameY="-0" frameWidth="303" frameHeight="412"/>
+</TextureAtlas>

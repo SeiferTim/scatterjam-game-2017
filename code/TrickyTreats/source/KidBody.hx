@@ -44,6 +44,9 @@ class KidBody extends FlxSprite
 	
 	public var shadow:FlxSprite;
 	
+	public var bag:FlxSprite;
+	
+	
 
 	public function new(Parent:PlayState, BaseX:Float, BaseY:Float, HeadNo:Int, IsPlayer:Bool = false, IsMonster:Bool = false, ZOff:Float)
 	{
@@ -90,6 +93,13 @@ class KidBody extends FlxSprite
 		head.centerOffsets();
 		head.centerOrigin();
 		
+		
+		bag = new FlxSprite();
+		bag.frames = GraphicsCache.loadGraphicFromAtlas("bags", AssetPaths.bags__png, AssetPaths.bags__xml).atlasFrames;
+		bag.animation.randomFrame();
+		bag.centerOffsets();
+		bag.centerOrigin();
+		
 		baseX = BaseX;
 		baseY = BaseY;
 		
@@ -129,6 +139,8 @@ class KidBody extends FlxSprite
 		}
 		shadow.x = baseX -(shadow.width / 2);
 		shadow.y = baseY - (shadow.height / 2);
+		bag.x = baseX + 12;
+		bag.y = baseY - 42 - (headBounceY * .2);
 	}
 	
 	private function set_baseY(Value:Float):Float
@@ -332,6 +344,7 @@ class KidBody extends FlxSprite
 		headTweenY.destroy();
 		head.kill();
 		shadow.kill();
+		bag.kill();
 		if (cameraFocus != null)
 			cameraFocus.kill();
 		
@@ -344,7 +357,9 @@ class KidBody extends FlxSprite
 	{
 		head = FlxDestroyUtil.destroy(head);
 		shadow = FlxDestroyUtil.destroy(shadow);
-		
+		bag = FlxDestroyUtil.destroy(bag);
+		if (cameraFocus != null)
+			cameraFocus = FlxDestroyUtil.destroy(cameraFocus);
 		
 		super.destroy();
 	}
