@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="sprites.png">
+	<!--
+	Created with ShoeBox
+	http://renderhjs.net/shoebox/
+	-->
+	<SubTexture name="001.png"	x="375"	y="471"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="002.png"	x="375"	y="314"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="003.png"	x="375"	y="157"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="004.png"	x="375"	y="0"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="005.png"	x="250"	y="628"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="006.png"	x="250"	y="471"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="007.png"	x="625"	y="0"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="008.png"	x="250"	y="157"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="009.png"	x="250"	y="0"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="010.png"	x="125"	y="628"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="011.png"	x="125"	y="471"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="012.png"	x="125"	y="314"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="100.png"	x="125"	y="157"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="101.png"	x="125"	y="0"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="102.png"	x="0"	y="628"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="104.png"	x="0"	y="471"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="105.png"	x="0"	y="314"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="106.png"	x="0"	y="157"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="107.png"	x="0"	y="0"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="108.png"	x="250"	y="314"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="109.png"	x="500"	y="628"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="110.png"	x="500"	y="471"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="111.png"	x="500"	y="314"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="112.png"	x="500"	y="157"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="113.png"	x="500"	y="0"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+	<SubTexture name="114.png"	x="375"	y="628"	width="124"	height="156" frameX="-0" frameY="-0" frameWidth="124" frameHeight="156"/>
+</TextureAtlas>
