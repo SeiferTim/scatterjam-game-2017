@@ -279,7 +279,7 @@ class PlayState extends FlxState
 		FlxTween.tween(bgStars, {alpha:1, y: -300}, 130, {type: FlxTween.ONESHOT, ease:FlxEase.linear, startDelay: 50 });
 		FlxTween.circularMotion(bgMoon, FlxG.width * .2, FlxG.height * .33, (FlxG.height * .45)-bgMoon.height, 180, true, 500, true );
 		
-		//SoundSystem.playMusic(AssetPaths.Halloween_Fun__mp3, -1, AssetPaths.Halloween_Fun__mp3);
+		SoundSystem.playMusic(AssetPaths.Halloween_Fun__mp3, -1, AssetPaths.Halloween_Fun__mp3);
 		
 		FlxG.camera.fade(FlxColor.BLACK, .33, true);
 		
