@@ -80,8 +80,6 @@ class PlayState extends FlxState
 	{
 		super.create();
 		
-		FlxG.mouse.visible = false;
-		
 		
 		sndMonsterDeaths = [AssetPaths.ahhwwww__wav, AssetPaths.arrrgg__wav];
 		sndInteract = [AssetPaths.hey__wav];
@@ -257,8 +255,8 @@ class PlayState extends FlxState
 		
 		
 		timer = new FlxPieDial(0, 0, 60, FlxColor.ORANGE, 180, FlxPieDialShape.CIRCLE, true, 0);
-		timer.x = FlxG.width - timer.width - 48;
-		timer.y = 48;
+		timer.x = FlxG.width - timer.width - 64;
+		timer.y = 64;
 		timer.amount = 1;
 		timer.scrollFactor.set();
 		timer.camera = hudCam;

@@ -1,6 +1,8 @@
 package;
 import flixel.FlxG;
 import flixel.input.keyboard.FlxKey;
+import flixel.math.FlxMath;
+import flixel.math.FlxPoint;
 
 
 class Input
@@ -30,9 +32,37 @@ class Input
 	public static var C_KEYS:Array<FlxKey> = [C];
 	public static var START_KEYS:Array<FlxKey> = [P];
 	
+	
+	public static inline var moveTime:Float = 3;
+	public static var lastMove:Float = 0;
+	public static var lastMousePos:FlxPoint;
+	
+	public static function initialize():Void
+	{
+		lastMousePos = FlxPoint.get(Math.NEGATIVE_INFINITY, Math.NEGATIVE_INFINITY);
+		FlxG.mouse.visible = false;
+	}
+	
 	public static function update(elapsed:Float):Void
 	{
 		reset();
+		
+		if (FlxG.mouse.visible)
+		{
+			lastMove -= elapsed;
+			if (lastMove <= 0)
+			{
+				FlxG.mouse.visible = false;
+			}
+		}
+		if (lastMousePos.x != FlxG.mouse.x || lastMousePos.y != FlxG.mouse.y)
+		{
+			lastMove = moveTime;
+			FlxG.mouse.visible = true;
+		}
+		lastMousePos.x = FlxG.mouse.x;
+		lastMousePos.y = FlxG.mouse.y;
+		
 		
 		Left[PRESSED] = FlxG.keys.anyPressed(LEFT_KEYS);
 		Left[JUST_PRESSED] = FlxG.keys.anyJustPressed(LEFT_KEYS);

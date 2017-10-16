@@ -7,9 +7,13 @@ import openfl.media.Sound;
 
 class SoundSystem {
 	
+	
+	
 	public static var volumeMusic(default, set):Float = .5;
 	
+	
 	public static var currentMusic:Null<FlxSoundAsset>;
+	
 	
 	
 	static public function playMusic(Music:FlxSoundAsset, ?FadeInTime:Float=-1, ?LoopTrack:Null<FlxSoundAsset>):Void

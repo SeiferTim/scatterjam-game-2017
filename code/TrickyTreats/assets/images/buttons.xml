@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="sprites.png">
+	<!--
+	Created with ShoeBox
+	http://renderhjs.net/shoebox/
+	-->
+	<SubTexture name="close_off.png"	x="0"	y="98"	width="48"	height="48" frameX="-0" frameY="-0" frameWidth="48" frameHeight="48"/>
+	<SubTexture name="close_up.png"	x="0"	y="49"	width="48"	height="48" frameX="-0" frameY="-0" frameWidth="48" frameHeight="48"/>
+	<SubTexture name="config_off.png"	x="0"	y="0"	width="48"	height="48" frameX="-0" frameY="-0" frameWidth="48" frameHeight="48"/>
+	<SubTexture name="config_up.png"	x="49"	y="0"	width="48"	height="48" frameX="-0" frameY="-0" frameWidth="48" frameHeight="48"/>
+	<SubTexture name="maximize_off.png"	x="98"	y="0"	width="48"	height="48" frameX="-0" frameY="-0" frameWidth="48" frameHeight="48"/>
+	<SubTexture name="maximize_up.png"	x="49"	y="98"	width="48"	height="48" frameX="-0" frameY="-0" frameWidth="48" frameHeight="48"/>
+	<SubTexture name="restore_off.png"	x="49"	y="49"	width="48"	height="48" frameX="-0" frameY="-0" frameWidth="48" frameHeight="48"/>
+	<SubTexture name="restore_up.png"	x="98"	y="49"	width="48"	height="48" frameX="-0" frameY="-0" frameWidth="48" frameHeight="48"/>
+</TextureAtlas>

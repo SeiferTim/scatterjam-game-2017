@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="sprites.png">
+	<!--
+	Created with ShoeBox
+	http://renderhjs.net/shoebox/
+	-->
+	<SubTexture name="check-off-off.png"	x="0"	y="33"	width="32"	height="32" frameX="-0" frameY="-0" frameWidth="32" frameHeight="32"/>
+	<SubTexture name="check-off-on.png"	x="33"	y="0"	width="32"	height="32" frameX="-0" frameY="-0" frameWidth="32" frameHeight="32"/>
+	<SubTexture name="check-on-off.png"	x="33"	y="33"	width="32"	height="32" frameX="-0" frameY="-0" frameWidth="32" frameHeight="32"/>
+	<SubTexture name="check-on-on.png"	x="0"	y="0"	width="32"	height="32" frameX="-0" frameY="-0" frameWidth="32" frameHeight="32"/>
+</TextureAtlas>

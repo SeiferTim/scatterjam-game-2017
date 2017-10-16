@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="sprites.png">
+	<!--
+	Created with ShoeBox
+	http://renderhjs.net/shoebox/
+	-->
+	<SubTexture name="green_candy.png"	x="177"	y="0"	width="176"	height="120" frameX="-0" frameY="-0" frameWidth="176" frameHeight="120"/>
+	<SubTexture name="light_green_candy.png"	x="177"	y="121"	width="176"	height="120" frameX="-0" frameY="-0" frameWidth="176" frameHeight="120"/>
+	<SubTexture name="light_red_candy.png"	x="0"	y="0"	width="176"	height="120" frameX="-0" frameY="-0" frameWidth="176" frameHeight="120"/>
+	<SubTexture name="red_candy.png"	x="0"	y="121"	width="176"	height="120" frameX="-0" frameY="-0" frameWidth="176" frameHeight="120"/>
+</TextureAtlas>

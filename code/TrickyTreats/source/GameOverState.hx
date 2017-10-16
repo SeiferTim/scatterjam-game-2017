@@ -17,8 +17,6 @@ class GameOverState extends FlxState
 	{
 		super();
 		
-		
-		
 	}
 	
 	override public function create():Void 
@@ -28,7 +26,7 @@ class GameOverState extends FlxState
 		var font_light:FlxBitmapFont = FlxBitmapFont.fromAngelCode(AssetPaths.custom_font_light_normal_export__png, AssetPaths.custom_font_light_normal_export__xml);
 		
 		var t:FlxBitmapText = new FlxBitmapText(font_light);
-		t.text = "Press Any Key to Try Again!";
+		t.text = "Press X to Try Again!";
 		t.color = FlxColor.RED;
 		t.alignment = "center";
 		t.screenCenter(FlxAxes.X);
@@ -46,9 +44,11 @@ class GameOverState extends FlxState
 	override public function update(elapsed:Float):Void 
 	{
 		
+		Input.update(elapsed);
+		
 		if (ready)
 		{
-			Input.update(elapsed);
+			
 			if (Input.A_Button[Input.JUST_RELEASED] || Input.B_Button[Input.JUST_RELEASED] || Input.C_Button[Input.JUST_RELEASED])
 			{
 				ready = false;

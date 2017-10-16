@@ -8,10 +8,6 @@ import flixel.text.FlxBitmapText;
 import flixel.util.FlxAxes;
 import flixel.util.FlxColor;
 
-/**
- * ...
- * @author ...
- */
 class GameWinState extends FlxState 
 {
 
@@ -32,7 +28,7 @@ class GameWinState extends FlxState
 		var font_light:FlxBitmapFont = FlxBitmapFont.fromAngelCode(AssetPaths.custom_font_light_normal_export__png, AssetPaths.custom_font_light_normal_export__xml);
 		
 		var t:FlxBitmapText = new FlxBitmapText(font_light);
-		t.text = "Press Any Key to Play Again!";
+		t.text = "Press X to Play Again!";
 		t.color = FlxColor.PURPLE;
 		t.alignment = "center";
 		t.screenCenter(FlxAxes.X);
@@ -49,10 +45,11 @@ class GameWinState extends FlxState
 	
 	override public function update(elapsed:Float):Void 
 	{
+		Input.update(elapsed);
 		
 		if (ready)
 		{
-			Input.update(elapsed);
+			
 			if (Input.A_Button[Input.JUST_RELEASED] || Input.B_Button[Input.JUST_RELEASED] || Input.C_Button[Input.JUST_RELEASED])
 			{
 				ready = false;
