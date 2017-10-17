@@ -36,7 +36,7 @@ class GameWinState extends FlxState
 		add(t);
 		
 		FlxG.camera.fade(FlxColor.BLACK, .33, true, function() {
-			FlxG.sound.play(AssetPaths.Game_win__wav);
+			FlxG.sound.play(AssetPaths.Game_win__wav,1,false, SoundSystem.groupSound);
 			ready = true;
 		});
 		

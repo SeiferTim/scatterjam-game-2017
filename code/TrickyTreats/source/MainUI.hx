@@ -2,22 +2,42 @@ package;
 
 
 import axollib.GraphicsCache;
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
+import flixel.math.FlxPoint;
+import flixel.util.FlxDestroyUtil;
 
 class MainUI extends FlxGroup 
 {
 
+	
+	public var hudCam:FlxCamera;
 	public var btnClose:FlxSprite;
 	public var btnScreen:FlxSprite;
 	public var btnConfig:FlxSprite;
-	
+	public var mousePoint:FlxPoint;
 	public var wait:Bool = false;
 	
-	public function new() 
+	public function new(?HudCam:FlxCamera = null) 
 	{
+		
 		super(3);
+		
+		
+		
+		if (HudCam == null)
+		{
+			hudCam = FlxG.camera;
+		}
+		else
+		{
+			hudCam = HudCam;
+		}
+		
+		camera = hudCam;
+		cameras = [hudCam];
 		
 		btnClose = new FlxSprite();
 		btnClose.frames = GraphicsCache.loadGraphicFromAtlas("buttons", AssetPaths.buttons__png, AssetPaths.buttons__xml).atlasFrames;
@@ -27,6 +47,9 @@ class MainUI extends FlxGroup
 		btnClose.scrollFactor.set();
 		btnClose.x = FlxG.width - btnClose.width - 16;
 		btnClose.y = 24;
+		btnClose.camera = hudCam;
+		btnClose.cameras = [hudCam];
+		
 		add(btnClose);
 		
 		btnScreen = new FlxSprite();
@@ -42,6 +65,8 @@ class MainUI extends FlxGroup
 		btnScreen.scrollFactor.set();
 		btnScreen.y = 24;
 		btnScreen.x = btnClose.x - btnScreen.width - 16;
+		btnScreen.camera = hudCam;
+		btnScreen.cameras = [hudCam];
 		add(btnScreen);
 		
 		btnConfig = new FlxSprite();
@@ -52,18 +77,25 @@ class MainUI extends FlxGroup
 		btnConfig.scrollFactor.set();
 		btnConfig.x = btnScreen.x - btnConfig.width - 16;
 		btnConfig.y = 24;
+		btnConfig.camera = hudCam;
+		btnConfig.cameras = [hudCam];
 		add(btnConfig);
+		
+		mousePoint = FlxPoint.get();
 		
 	}
 	
 	override public function update(elapsed:Float):Void 
 	{
 		
-		if (FlxG.mouse.overlaps(btnClose))
+		
+		FlxG.mouse.getScreenPosition(hudCam, mousePoint);
+		if (btnClose.overlapsPoint(mousePoint))
 		{
 			btnClose.animation.play("close-up");
 			if (FlxG.mouse.justReleased)
 			{
+				FlxG.sound.play(AssetPaths.click__wav, 1, false, SoundSystem.groupSound);
 				closeMenu();
 			}
 		}
@@ -72,11 +104,12 @@ class MainUI extends FlxGroup
 			btnClose.animation.play("close-off");
 		}
 		
-		if (FlxG.mouse.overlaps(btnConfig))
+		if (btnConfig.overlapsPoint(mousePoint))
 		{
 			btnConfig.animation.play("config-up");
 			if (FlxG.mouse.justReleased)
 			{
+				FlxG.sound.play(AssetPaths.click__wav, 1, false, SoundSystem.groupSound);
 				configMenu();
 			}
 		}
@@ -85,8 +118,9 @@ class MainUI extends FlxGroup
 			btnConfig.animation.play("config-off");
 		}
 		
-		if (FlxG.mouse.overlaps(btnScreen))
+		if (btnScreen.overlapsPoint(mousePoint))
 		{
+			
 			if (FlxG.fullscreen)
 			{
 				btnScreen.animation.play("res-up");
@@ -97,6 +131,7 @@ class MainUI extends FlxGroup
 			}
 			if (FlxG.mouse.justReleased)
 			{
+				FlxG.sound.play(AssetPaths.click__wav, 1, false, SoundSystem.groupSound);
 				switchFullScreen();
 			}
 			
@@ -128,12 +163,12 @@ class MainUI extends FlxGroup
 		super.update(elapsed);
 	}
 	
-	private function closeMenu():Void
+	public function closeMenu():Void
 	{
 		if (wait)
 			return;
 		wait = true;
-		FlxG.state.openSubState(new QuitMenu(returnFromMenu));
+		FlxG.state.openSubState(new QuitMenu(returnFromMenu, hudCam));
 		
 		
 		
@@ -144,7 +179,7 @@ class MainUI extends FlxGroup
 		if (wait)
 			return;
 		wait = true;
-		FlxG.state.openSubState(new ConfigMenu(returnFromMenu));
+		FlxG.state.openSubState(new ConfigMenu(returnFromMenu, hudCam));
 	}
 	
 	private function switchFullScreen():Void
@@ -156,4 +191,14 @@ class MainUI extends FlxGroup
 	{
 		wait = false;
 	}
+	
+	
+	override public function destroy():Void 
+	{
+		mousePoint.put();
+		mousePoint = FlxDestroyUtil.destroy(mousePoint);
+		super.destroy();
+	}
+	
+
 }

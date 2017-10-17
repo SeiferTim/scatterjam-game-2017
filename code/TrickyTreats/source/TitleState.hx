@@ -23,7 +23,8 @@ class TitleState extends FlxState
 	
 	override public function create():Void 
 	{
-		Input.initialize();
+		
+		SoundSystem.playMusic(AssetPaths.Halloween_Fun_4__mp3, -1, AssetPaths.Halloween_Fun_4__mp3);
 		
 		UI = new MainUI();
 		
@@ -55,9 +56,10 @@ class TitleState extends FlxState
 		Input.update(elapsed);
 		if (ready)
 		{
-			if (Input.A_Button[Input.JUST_RELEASED] || Input.B_Button[Input.JUST_RELEASED] || Input.C_Button[Input.JUST_RELEASED])
+			if (Input.A_Button[Input.JUST_RELEASED] || Input.B_Button[Input.JUST_RELEASED] || Input.C_Button[Input.JUST_RELEASED] || Input.Start[Input.JUST_RELEASED])
 			{
 				ready = false;
+				SoundSystem.endMusic(.33);
 				FlxG.camera.fade(FlxColor.BLACK, .33, false, function() {
 					FlxG.switchState(new PlayState());
 				});

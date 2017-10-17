@@ -76,9 +76,14 @@ class PlayState extends FlxState
 	public var sndWrong:Array<FlxSoundAsset>;
 	public var sndTimeUp:Array<FlxSoundAsset>;
 	
+	public var UI:MainUI;
+	public var shownIntro:Bool = false;
+	public var timerStarted:Bool = false;
+	
 	override public function create():Void
 	{
 		super.create();
+		
 		
 		
 		sndMonsterDeaths = [AssetPaths.ahhwwww__wav, AssetPaths.arrrgg__wav];
@@ -94,6 +99,8 @@ class PlayState extends FlxState
 		FlxG.cameras.add(hudCam);
 		FlxG.camera = mainCam;
 		FlxCamera.defaultCameras = [mainCam];
+		
+		UI = new MainUI(hudCam);
 		
 		
 		//var font_dark:FlxBitmapFont = FlxBitmapFont.fromAngelCode(AssetPaths.custom_font_dark_export__png, AssetPaths.custom_font_dark_export__xml);
@@ -144,8 +151,8 @@ class PlayState extends FlxState
 		
 		
 		
-		FlxG.camera.setScrollBounds( -40, FlxG.width + 40, -40, FlxG.height +40);
-		FlxG.camera.style  = FlxCameraFollowStyle.TOPDOWN;
+		mainCam.setScrollBounds( -40, FlxG.width + 40, -40, FlxG.height +40);
+		mainCam.style  = FlxCameraFollowStyle.TOPDOWN;
 		FlxG.worldBounds.set( 200, (FlxG.height / 2) + 50, FlxG.width - 400, (FlxG.height / 2) - 30);
 		
 		
@@ -192,7 +199,7 @@ class PlayState extends FlxState
 		kids.add(player.head);
 		kids.add(player.bag);
 		
-		FlxG.camera.target = player;
+		mainCam.target = player;
 		
 		target = new FlxSprite();
 		target.loadGraphic(AssetPaths.target__png);
@@ -255,12 +262,14 @@ class PlayState extends FlxState
 		
 		
 		timer = new FlxPieDial(0, 0, 60, FlxColor.ORANGE, 180, FlxPieDialShape.CIRCLE, true, 0);
-		timer.x = FlxG.width - timer.width - 64;
-		timer.y = 64;
+		timer.x = 32;
+		timer.y = 32;
 		timer.amount = 1;
 		timer.scrollFactor.set();
 		timer.camera = hudCam;
 		timer.cameras = [hudCam];
+		
+		
 		
 		var clock:FlxSprite = new FlxSprite(0, 0, AssetPaths.clock__png);
 		clock.scrollFactor.set();
@@ -272,20 +281,22 @@ class PlayState extends FlxState
 		add(timer);
 		
 		
+		add(UI);
+		
 		FlxTween.tween(bgGrad, {y:0}, 180, {type:FlxTween.ONESHOT, ease:FlxEase.linear});
-		FlxTween.tween(timer, {amount:0}, 180, {type:FlxTween.ONESHOT, ease:FlxEase.linear, onComplete:timeUp});
+		
 		FlxTween.tween(bgStars, {alpha:1, y: -300}, 130, {type: FlxTween.ONESHOT, ease:FlxEase.linear, startDelay: 50 });
 		FlxTween.circularMotion(bgMoon, FlxG.width * .2, FlxG.height * .33, (FlxG.height * .45)-bgMoon.height, 180, true, 500, true );
 		
 		SoundSystem.playMusic(AssetPaths.Halloween_Fun__mp3, -1, AssetPaths.Halloween_Fun__mp3);
 		
-		FlxG.camera.fade(FlxColor.BLACK, .33, true);
+		mainCam.fade(FlxColor.BLACK, .33, true);
 		
 	}
 	
 	private function timeUp(_):Void
 	{
-		FlxG.sound.play(FlxG.random.getObject(sndTimeUp), 1, false, null, true, function() {
+		FlxG.sound.play(FlxG.random.getObject(sndTimeUp), 1, false, SoundSystem.groupSound, true, function() {
 			GameOver();
 		});
 		
@@ -351,6 +362,25 @@ class PlayState extends FlxState
 		
 		super.update(elapsed);
 		
+		if (!shownIntro)
+		{
+			shownIntro = true;
+			openSubState(new IntroSubState());
+			return;
+		}
+		else if (!timerStarted)
+		{
+			timerStarted = true;
+			FlxTween.tween(timer, {amount:0}, 180, {type:FlxTween.ONESHOT, ease:FlxEase.linear, onComplete:timeUp});
+		}
+		
+		
+		
+		if (Input.Start[Input.JUST_RELEASED])
+		{
+			UI.closeMenu();
+			return;
+		}
 		
 		determineTarget();
 		
@@ -364,7 +394,7 @@ class PlayState extends FlxState
 				}
 				else if (Input.B_Button[Input.JUST_RELEASED] && !dialog.gave)
 				{
-					FlxG.sound.play(FlxG.random.getObject(sndGiveCandy));
+					FlxG.sound.play(FlxG.random.getObject(sndGiveCandy),1,false, SoundSystem.groupSound);
 					targeting.tiredness += .4;
 					playerCandy--;
 					candyCounter.text = Std.string(playerCandy);
@@ -387,7 +417,7 @@ class PlayState extends FlxState
 				target.visible = false;
 				targeting.talking = player.talking = true;
 				
-				FlxG.camera.target = targeting.cameraFocus;
+				mainCam.target = targeting.cameraFocus;
 				
 				FlxTween.tween(FlxG.camera, {zoom:4}, .33, {ease:FlxEase.sineOut, type:FlxTween.ONESHOT, onComplete:doneZoomIn});
 			}
@@ -397,7 +427,7 @@ class PlayState extends FlxState
 	
 	private function doneZoomIn(_):Void
 	{
-		FlxG.sound.play(FlxG.random.getObject(sndInteract));
+		FlxG.sound.play(FlxG.random.getObject(sndInteract),1,false, SoundSystem.groupSound);
 		if (targeting.isMonster)
 			targeting.tiredness += .1;
 		dialog.show(targeting, getKidLine(targeting));
@@ -428,7 +458,7 @@ class PlayState extends FlxState
 	
 	private function doneZoomOut(_):Void
 	{
-		FlxG.camera.target = player;
+		mainCam.target = player;
 		
 		
 		if (accusing)
@@ -436,7 +466,7 @@ class PlayState extends FlxState
 			accusing = false;
 			if (targeting.isMonster)
 			{
-				FlxG.sound.play(FlxG.random.getObject(sndMonsterDeaths));
+				FlxG.sound.play(FlxG.random.getObject(sndMonsterDeaths),1,false, SoundSystem.groupSound);
 				spawnExplosion(targeting.baseX, targeting.baseY);
 				targeting.kill();
 				playerCandy += 10;
@@ -451,7 +481,7 @@ class PlayState extends FlxState
 			}
 			else
 			{
-				FlxG.sound.play(FlxG.random.getObject(sndWrong));
+				FlxG.sound.play(FlxG.random.getObject(sndWrong),1,false, SoundSystem.groupSound);
 				spawnPunch(player.baseX, player.baseY);
 				playerCandy -= 5;
 				candyCounter.text = Std.string(playerCandy);
@@ -553,7 +583,7 @@ class PlayState extends FlxState
 	{
 		player.talking = true;
 		SoundSystem.endMusic(.33);
-		FlxG.camera.fade(FlxColor.BLACK, .5, false, function() {
+		mainCam.fade(FlxColor.BLACK, .5, false, function() {
 			FlxG.switchState(new GameWinState());
 		});
 	}
@@ -561,7 +591,7 @@ class PlayState extends FlxState
 	{
 		player.talking = true;
 		SoundSystem.endMusic(.33);
-		FlxG.camera.fade(FlxColor.BLACK, .5, false, function() {
+		mainCam.fade(FlxColor.BLACK, .5, false, function() {
 			FlxG.switchState(new GameOverState());
 		});
 	}

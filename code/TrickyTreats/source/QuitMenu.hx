@@ -2,10 +2,12 @@ package;
 
 import axollib.GraphicsCache;
 import flash.system.System;
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
 import flixel.graphics.frames.FlxBitmapFont;
+import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.text.FlxBitmapText;
 import flixel.tweens.FlxEase;
@@ -26,11 +28,20 @@ class QuitMenu extends FlxSubState
 	private var ready:Bool = false;
 	private var blackOut:FlxSprite;
 	private var alpha(default, set):Float;
+	private var mousePoint:FlxPoint;
+	private var hudCam:FlxCamera;
+	private var txtQuestion:FlxBitmapText;
 	
-	public function new(CallBack:Void->Void) 
+	public function new(CallBack:Void->Void, ?HudCamera:FlxCamera = null) 
 	{
 		super(FlxColor.TRANSPARENT);
 		
+		if (HudCamera == null)
+			hudCam = FlxG.camera;
+		else
+			hudCam = HudCamera;
+		
+		mousePoint = FlxPoint.get();
 		
 		closeCallback = CallBack;
 		
@@ -46,7 +57,7 @@ class QuitMenu extends FlxSubState
 		btnYes.animation.play("yes-off");
 		btnYes.scrollFactor.set();
 		btnYes.x = (FlxG.width / 2) - btnYes.width - 32;
-		btnYes.y = (FlxG.height / 2) + 32;
+		btnYes.y = (FlxG.height / 2) + 64;
 		
 		btnNo = new FlxSprite();
 		btnNo.frames = GraphicsCache.loadGraphicFromAtlas("candy_buttons", AssetPaths.candy_buttons__png, AssetPaths.candy_buttons__xml).atlasFrames;
@@ -55,16 +66,25 @@ class QuitMenu extends FlxSubState
 		btnNo.animation.play("no-off");
 		btnNo.scrollFactor.set();
 		btnNo.x = (FlxG.width / 2) + 32;
-		btnNo.y = (FlxG.height / 2) + 32;
+		btnNo.y = (FlxG.height / 2) + 64;
 		
 		var font_light:FlxBitmapFont = FlxBitmapFont.fromAngelCode(AssetPaths.custom_font_light_normal_export__png, AssetPaths.custom_font_light_normal_export__xml);
 		
 		title = new FlxBitmapText(font_light);
 		title.scrollFactor.set();
-		title.text = "Exit?";
+		title.text = "- PAUSED -";
 		title.color = FlxColor.PURPLE;
 		title.screenCenter(FlxAxes.X);
-		title.y = (FlxG.height / 2) - title.height - 32;
+		title.y = (FlxG.height / 2) - title.height - 64;
+		
+		txtQuestion = new FlxBitmapText(font_light);
+		txtQuestion.scrollFactor.set();
+		txtQuestion.text = "Quit Game?";
+		txtQuestion.color = FlxColor.RED;
+		
+		txtQuestion.screenCenter(FlxAxes.X);
+		txtQuestion.y = btnNo.y - txtQuestion.height - 16;
+		
 		
 		txtYes = new FlxBitmapText(font_light);
 		txtYes.scrollFactor.set();
@@ -85,7 +105,7 @@ class QuitMenu extends FlxSubState
 		back.x = btnYes.x - 64;
 		back.y = title.y - 64;
 		back.width = (btnNo.x + btnNo.width + 64) - (btnYes.x - 64);
-		back.height = (btnYes.y + btnYes.height + 64) - (title.y - 64);
+		back.height = (btnYes.y + btnYes.height + 64) - (title.y - 64);                                                                                                
 		
 		add(back);
 		add(title);
@@ -93,6 +113,12 @@ class QuitMenu extends FlxSubState
 		add(btnNo);
 		add(txtNo);
 		add(txtYes);
+		add(txtQuestion);
+		
+		
+		
+		camera = back.camera = title.camera = btnYes.camera = btnNo.camera = txtNo.camera = txtYes.camera = txtQuestion.camera = hudCam;
+		cameras = back.cameras = title.cameras = btnYes.cameras = btnNo.cameras = txtNo.cameras = txtYes.cameras = txtQuestion.cameras = [hudCam];
 		
 		alpha = 0;
 		
@@ -113,7 +139,7 @@ class QuitMenu extends FlxSubState
 		if (Value > 1)
 			alpha = 1;
 		alpha = Value;
-		back.alpha = title.alpha = btnYes.alpha = btnNo.alpha = txtNo.alpha = txtYes.alpha = alpha;
+		txtQuestion.alpha = back.alpha = title.alpha = btnYes.alpha = btnNo.alpha = txtNo.alpha = txtYes.alpha = alpha;
 		blackOut.alpha = alpha * .66;
 		return alpha;
 	}
@@ -122,35 +148,40 @@ class QuitMenu extends FlxSubState
 	{
 		
 		Input.update(elapsed);
-		
-		if (FlxG.mouse.overlaps(btnYes))
+		if (ready)
 		{
-			btnYes.animation.play("yes-up");
-			if (FlxG.mouse.justReleased && ready)
+			FlxG.mouse.getScreenPosition(hudCam, mousePoint);
+			
+			if (btnYes.overlapsPoint(mousePoint))
 			{
-				System.exit(0);
-				
+				btnYes.animation.play("yes-up");
+				if (FlxG.mouse.justReleased && ready)
+				{
+					FlxG.sound.play(AssetPaths.click__wav, 1, false, SoundSystem.groupSound);
+					System.exit(0);
+					
+				}
+			}
+			else
+			{
+				btnYes.animation.play("yes-off");
+			}
+			
+			if (btnNo.overlapsPoint(mousePoint))
+			{
+				btnNo.animation.play("no-up");
+				if (FlxG.mouse.justReleased && ready)
+				{
+					FlxG.sound.play(AssetPaths.click__wav, 1, false, SoundSystem.groupSound);
+					exitSubstate();
+					
+				}
+			}
+			else
+			{
+				btnNo.animation.play("no-off");
 			}
 		}
-		else
-		{
-			btnYes.animation.play("yes-off");
-		}
-		
-		if (FlxG.mouse.overlaps(btnNo))
-		{
-			btnNo.animation.play("no-up");
-			if (FlxG.mouse.justReleased && ready)
-			{
-				exitSubstate();
-				
-			}
-		}
-		else
-		{
-			btnNo.animation.play("no-off");
-		}
-		
 		super.update(elapsed);
 	}
 	

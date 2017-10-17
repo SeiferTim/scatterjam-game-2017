@@ -30,7 +30,7 @@ class Input
 	public static var A_KEYS:Array<FlxKey> = [Z];
 	public static var B_KEYS:Array<FlxKey> = [X];
 	public static var C_KEYS:Array<FlxKey> = [C];
-	public static var START_KEYS:Array<FlxKey> = [P];
+	public static var START_KEYS:Array<FlxKey> = [P, ESCAPE, ENTER];
 	
 	
 	public static inline var moveTime:Float = 3;
