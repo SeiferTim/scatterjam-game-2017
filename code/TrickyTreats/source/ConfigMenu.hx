@@ -361,7 +361,7 @@ class ConfigMenu extends FlxSubState
 		if (btnClose.overlapsPoint(mousePoint))
 		{
 			btnClose.animation.play("close-up");
-			if (FlxG.mouse.justReleased)
+			if (FlxG.mouse.justReleased && ready)
 			{
 				FlxG.sound.play(AssetPaths.click__wav, 1, false, SoundSystem.groupSound);
 				exitSubstate();

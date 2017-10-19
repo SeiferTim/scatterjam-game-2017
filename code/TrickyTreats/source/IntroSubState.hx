@@ -6,6 +6,7 @@ import flixel.FlxSubState;
 import flixel.graphics.frames.FlxBitmapFont;
 import flixel.math.FlxRect;
 import flixel.system.FlxAssets.FlxSoundAsset;
+import flixel.system.FlxSound;
 import flixel.text.FlxBitmapText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -26,7 +27,9 @@ class IntroSubState extends FlxSubState
 	public var alpha(default, set):Float;
 	private var ready:Bool = false;
 	private var howTo:FlxSprite;
-	
+	private var musicWas:Float;
+	private var started:Bool;
+	private var sound:FlxSound;
 	
 	public function new() 
 	{
@@ -93,7 +96,9 @@ class IntroSubState extends FlxSubState
 		
 		alpha = 0;
 		
-		FlxTween.tween(this, {alpha:1},.33, {type:FlxTween.ONESHOT, ease:FlxEase.cubeInOut, onComplete:finishFadeIn});
+		
+		FlxTween.tween(this, {alpha:1}, .33, {type:FlxTween.ONESHOT, ease:FlxEase.cubeInOut, onComplete:finishFadeIn});
+		
 		
 	}
 	
@@ -101,11 +106,7 @@ class IntroSubState extends FlxSubState
 	{
 		ready = true;
 
-		var t:FlxTimer = new FlxTimer();
-		t.start(.5,function (_)
-		{
-			FlxG.sound.play(arrVO[currText], 1, false, SoundSystem.groupSound, true, playNextSound);
-		});
+		
 		
 		
 	}
@@ -119,6 +120,7 @@ class IntroSubState extends FlxSubState
 		{
 			
 			FlxTween.tween(this, {alpha:0}, .33, {type:FlxTween.ONESHOT, ease:FlxEase.cubeInOut, onComplete:function(_) {
+				SoundSystem.fadeMusic(.5, musicWas);
 				howTo = new FlxSprite(0, 0, AssetPaths.how_to_play__png);
 				howTo.alpha = 0;
 				add(howTo);
@@ -139,7 +141,7 @@ class IntroSubState extends FlxSubState
 				
 				
 				FlxTween.tween(this, {alpha:1}, .33, {type:FlxTween.ONESHOT, ease:FlxEase.cubeInOut, onComplete:function(_) {
-					FlxG.sound.play(arrVO[currText], 1, false, SoundSystem.groupSound, true, playNextSound);
+					sound = FlxG.sound.play(arrVO[currText], 1, false, SoundSystem.groupSound, true, playNextSound);
 				}});
 			}});
 		}
@@ -170,19 +172,44 @@ class IntroSubState extends FlxSubState
 	
 	override public function update(elapsed:Float):Void 
 	{
+		
+		
 		Input.update(elapsed);
 		
 		super.update(elapsed);
+
 		if (ready)
 		{
-			
-			if (Input.A_Button[Input.JUST_RELEASED] || Input.B_Button[Input.JUST_RELEASED] || Input.C_Button[Input.JUST_RELEASED] || Input.Start[Input.JUST_RELEASED])
+			if (!started)
 			{
-				exitSubstate();
 				
-			}	
+				if (SoundSystem.music != null)
+				{
+					if (SoundSystem.music.playing && SoundSystem.music.exists)
+					{
+						musicWas = SoundSystem.music.volume;
+						SoundSystem.fadeMusic(.5, musicWas * .1);
+						started = true;
+						var t:FlxTimer = new FlxTimer();
+						t.start(.5,function (_)
+						{
+					
+							sound = FlxG.sound.play(arrVO[currText], 1, false, SoundSystem.groupSound, true, playNextSound);
+						});
+					}
+				
+				}
+			}
+			else
+			{
+
+				if (Input.A_Button[Input.JUST_RELEASED] || Input.B_Button[Input.JUST_RELEASED] || Input.C_Button[Input.JUST_RELEASED] || Input.Start[Input.JUST_RELEASED])
+				{
+					exitSubstate();
+				}	
+			}
 		}
-		
+	
 		
 	}
 	
@@ -190,8 +217,28 @@ class IntroSubState extends FlxSubState
 	{
 		ready = false;
 		
-		FlxTween.tween(this, {alpha:0},.33, {type:FlxTween.ONESHOT, ease:FlxEase.cubeInOut, onComplete:finishFadeOut});
+		if (sound != null)
+		{
+			if (sound.exists)
+			{
+				if (sound.playing)
+				{
+					sound.fadeOut(.33, 0, function(_) {
+						finishExit();
+					});
+				}
+			}
+			
+		}
 		
+		
+		
+	}
+	
+	private function finishExit():Void
+	{
+		SoundSystem.fadeMusic(.5, musicWas);
+		FlxTween.tween(this, {alpha:0},.5, {type:FlxTween.ONESHOT, ease:FlxEase.cubeInOut, onComplete:finishFadeOut});
 	}
 	
 	private function finishFadeOut(_):Void

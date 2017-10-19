@@ -69,7 +69,7 @@ class Dialog extends FlxGroup
 		add(candy);
 		
 		
-		alpha = 0.01;
+		alpha = 0;
 		
 	}
 	
@@ -118,7 +118,7 @@ class Dialog extends FlxGroup
 		ready = false;
 		newText = NewText;
 		gave = true;
-		FlxTween.tween(this, {alpha: 0.01}, .33, {type:FlxTween.ONESHOT, ease:FlxEase.sineOut, onComplete:finishSwitchOut});
+		FlxTween.tween(this, {alpha: 0}, .33, {type:FlxTween.ONESHOT, ease:FlxEase.sineOut, onComplete:finishSwitchOut});
 	}
 	
 	private function finishSwitchOut(_):Void
@@ -163,7 +163,7 @@ class Dialog extends FlxGroup
 		if (Value > 1)
 			Value = 1;
 		else if (Value <= 0)
-			Value = 0.01;
+			Value = 0;
 		alpha = Value;
 		candy.alpha = thought.alpha = hint.alpha = text.alpha = box.alpha = Value; //candyCount.alpha = 
 		return Value;
@@ -178,7 +178,7 @@ class Dialog extends FlxGroup
 	{
 		gave = false;
 		ready = false;
-		FlxTween.tween(this, {alpha: 0.01}, .33, {type:FlxTween.ONESHOT, ease:FlxEase.sineOut, onComplete:finishFadeOut});
+		FlxTween.tween(this, {alpha: 0}, .33, {type:FlxTween.ONESHOT, ease:FlxEase.sineOut, onComplete:finishFadeOut});
 	}
 	
 	private function finishFadeOut(_):Void

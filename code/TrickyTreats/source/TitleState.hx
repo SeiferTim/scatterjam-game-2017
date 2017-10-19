@@ -23,8 +23,11 @@ class TitleState extends FlxState
 	
 	override public function create():Void 
 	{
-		
-		SoundSystem.playMusic(AssetPaths.Halloween_Fun_4__mp3, -1, AssetPaths.Halloween_Fun_4__mp3);
+		#if flash
+		SoundSystem.playMusic(AssetPaths.Halloween_Fun_4__mp3, .2);
+		#else
+		SoundSystem.playMusic(AssetPaths.Halloween_Fun_4__ogg, .2);
+		#end
 		
 		UI = new MainUI();
 		

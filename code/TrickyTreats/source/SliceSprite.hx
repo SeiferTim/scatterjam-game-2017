@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxCamera;
 import flixel.addons.display.FlxSliceSprite;
 import flixel.graphics.FlxGraphic;
 import flixel.math.FlxRect;
@@ -11,6 +12,9 @@ class SliceSprite extends FlxSliceSprite
 
 	override private function blitTileOnCanvas(TileIndex:Int, Stretch:Bool, X:Float, Y:Float, Width:Float, Height:Float):Void
 	{
+		
+		#if flash
+		
 		var tile:FlxGraphic = slices[TileIndex];
 		
 		if (tile != null)
@@ -29,6 +33,16 @@ class SliceSprite extends FlxSliceSprite
 			renderSprite.pixels.draw(FlxSpriteUtil.flashGfxSprite, null, null);// colorTransform);
 			FlxSpriteUtil.flashGfx.clear();
 		}
+		
+		#else
+		
+		return super.blitTileOnCanvas(TileIndex, Stretch, X, Y, Width, Height);
+		
+		#end
+		
 	}
+	
+	
+	
 	
 }

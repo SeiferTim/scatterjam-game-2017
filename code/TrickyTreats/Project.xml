@@ -14,13 +14,13 @@
 	<!-- ____________________________ Window Settings ___________________________ -->
 
 	<!--These window settings apply to all targets-->
-	<window width="1600" height="900" fps="60" background="#000000" hardware="true" vsync="true" />
+	<window width="800" height="450" fps="60" background="#000000" hardware="true" vsync="true" />
 
 	<!--HTML5-specific-->
 	<window if="html5" resizable="false" />
 
 	<!--Desktop-specific-->
-	<window if="desktop" orientation="landscape" fullscreen="true" resizable="true" />
+	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" borderless="false" />
 
 	<!--Mobile-specific-->
 	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" />
@@ -29,7 +29,18 @@
 
 	<set name="BUILD_DIR" value="export" />
 	<classpath name="source" />
-	<assets path="assets" />
+	<!--<assets path="assets" />-->
+	
+	<assets path="assets/data" include="*.txt" type="text" embed="true" />
+	<assets path="assets/images" include="*.png" type="image" embed="true" />
+	<assets path="assets/images" include="*.xml" type="text" embed="true" />
+	<assets path="assets/fonts" include="*.png" type="image" embed="true" />
+	<assets path="assets/fonts" include="*.xml" type="text" embed="true" />
+	<assets path="assets/sounds" include="*.wav" type="sound" embed="false" />
+	<assets path="assets/music" include="*.mp3" if="flash" type="music" embed="false" />
+	<assets path="assets/music" include="*.ogg" unless="flash" type="music" embed="false" />
+	
+	<set name="next" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
@@ -76,8 +87,23 @@
 
 	<!--Enable this for Nape release builds for a serious peformance improvement-->
 	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
+	
 
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
+	
+	
+	<icon path="assets/icons/icon-16.png" height="16" width="16" />
+	<icon path="assets/icons/icon-24.png" height="24" width="24" />
+	<icon path="assets/icons/icon-32.png" height="32" width="32" />
+	<icon path="assets/icons/icon-40.png" height="40" width="40" />
+	<icon path="assets/icons/icon-48.png" height="48" width="48" />
+	<icon path="assets/icons/icon-64.png" height="64" width="64" />
+	<icon path="assets/icons/icon-128.png" height="128" width="128" />
+	<icon path="assets/icons/icon-256.png" height="256" width="256" />
+	<icon path="assets/icons/icon-512.png" height="512" width="512" />
+	<icon path="assets/icons/icon-1024.png" height="1024" width="1024" />
+	
+	
 </project>

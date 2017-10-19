@@ -3,7 +3,9 @@ import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.math.FlxMath;
 import flixel.system.FlxAssets.FlxSoundAsset;
+import flixel.system.FlxSound;
 import flixel.system.FlxSoundGroup;
+import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSave;
 import openfl.Assets;
 import openfl.media.Sound;
@@ -18,6 +20,7 @@ class SoundSystem {
 	public static var volumeMusic(get, set):Float;
 	
 	public static var currentMusic:Null<FlxSoundAsset>;
+	public static var music:FlxSound;
 	
 	public static var soundSave:FlxSave;
 	
@@ -29,8 +32,6 @@ class SoundSystem {
 			return;
 		initialized = true;
 		
-		FlxG.autoPause = false;
-		FlxG.sound.soundTrayEnabled = false;
 		
 		soundSave = new FlxSave();
 		soundSave.bind("monstermasks-sound-save");
@@ -49,17 +50,19 @@ class SoundSystem {
 	
 	static public function playMusic(Music:FlxSoundAsset, ?FadeInTime:Float=-1, ?LoopTrack:Null<FlxSoundAsset>):Void
 	{
-		
 		if ((currentMusic != Music && (LoopTrack != null || LoopTrack != currentMusic)) || currentMusic == null)
 		{
-			
-			if (FlxG.sound.music != null)
+			if (music != null)
 			{
-				if (FlxG.sound.music.exists)
+				if (music.exists)
 				{
-					FlxG.sound.music.fadeOut(.1, 0, function(_) {
+					music.fadeOut(.1, 0, function(_) {
 						switchToMusic(Music, FadeInTime, LoopTrack);
 					});
+				}
+				else
+				{
+					switchToMusic(Music, FadeInTime, LoopTrack);
 				}
 			}
 			else
@@ -73,7 +76,7 @@ class SoundSystem {
 	{
 		if (LoopTrack != null)
 		{
-			FlxG.sound.play(Music, 1, false, groupMusic, true, function() {
+			music = FlxG.sound.play(Music, 1, false, groupMusic, true, function() {
 				if (currentMusic == Music)
 				{
 					switchToMusic(LoopTrack, -1, null);
@@ -83,10 +86,10 @@ class SoundSystem {
 		}
 		else
 		{
-			FlxG.sound.playMusic(Music, 1, true, groupMusic);
+			music = FlxG.sound.play(Music, 1, true, groupMusic, false);
 			if (FadeInTime != -1)
 			{
-				FlxG.sound.music.fadeIn(FadeInTime, 0.00000001,1);
+				music.fadeIn(FadeInTime, 0.00000001,1);
 			}
 			currentMusic = Music;
 		}
@@ -107,11 +110,11 @@ class SoundSystem {
 	{
 		groupMusic.volume = FlxMath.bound(Amount, 0,1);
 		
-		if (FlxG.sound.music != null)
+		if (music != null)
 		{
-			if (FlxG.sound.music.exists && FlxG.sound.music.playing)
+			if (music.exists && music.playing)
 			{
-				FlxG.sound.music.volume = groupMusic.volume;
+				music.volume = groupMusic.volume;
 			}
 		}
 		
@@ -133,13 +136,32 @@ class SoundSystem {
 	
 	static public function endMusic(FadeTime:Float = 1):Void
 	{
-		if (FlxG.sound.music != null)
+		if (music != null)
 		{
-			if (FlxG.sound.music.exists && FlxG.sound.music.playing)
+			if (music.exists && music.playing)
 			{
-				FlxG.sound.music.fadeOut(FadeTime, 0, function(_) {
+				music.fadeOut(FadeTime, 0, function(_) {
+					music = FlxDestroyUtil.destroy(music);
 					currentMusic = null;
 				});
+			}
+		}
+	}
+	
+	static public function fadeMusic(FadeTime:Float, FadeAmount:Float):Void
+	{
+		if (music != null)
+		{
+			if (music.exists && music.playing)
+			{
+				if (music.volume >= FadeAmount)
+				{
+					music.fadeOut(FadeTime, FadeAmount);
+				}
+				else
+				{
+					music.fadeIn(FadeTime, FadeAmount);
+				}
 			}
 		}
 	}

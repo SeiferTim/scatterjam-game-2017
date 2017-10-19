@@ -30,8 +30,8 @@ class KidBody extends FlxSprite
 	public var moveAngle:Float=0;
 	public var moveSpeed:Float=0;
 	public var moveTimer:Float = 0;
-	public var headBounceX:Float;
-	public var headBounceY:Float;
+	public var headBounceX:Float=0;
+	public var headBounceY:Float=0;
 	public var headTweenX:FlxTween;
 	public var headTweenY:FlxTween;
 	public var parent:PlayState;
@@ -40,7 +40,7 @@ class KidBody extends FlxSprite
 	public var isMonster:Bool;
 	public var tiredness(default, set):Float;
 	
-	public var zOff:Float;
+	public var zOff:Float=0;
 	
 	public var shadow:FlxSprite;
 	
